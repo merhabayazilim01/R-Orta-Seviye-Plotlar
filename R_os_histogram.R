@@ -51,7 +51,7 @@ ggplot(data1, aes(x=kisiler , y=para)) +
     panel.grid = element_blank(),
     axis.line = element_line(),
     plot.title = element_text(hjust = 0.5),
-    legend.position = "none") +
+    legend.position = "none") + #legend kaldirma
   labs(x= "person", y="income")
 
-#legend kaldirma
+

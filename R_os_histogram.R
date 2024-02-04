@@ -1,33 +1,57 @@
 
-  #------------------------ Merhaba YazD1lD1m -------------------------------#
+  #------------------------ Merhaba Yazilim -------------------------------#
 
   #----------------------- Hasan Can Demirci ------------------------------#
 
 
 
-## Histogram | Bar grafik | Bar graph | Sütun grafiği 
+## Histogram | Bar grafik | Bar graph | sütun grafigi 
 
+library(ggplot2)
+library(readxl)
+library(dplyr)
+library(tidyr)
 
+data <- read_xlsx("data_source.xlsx", sheet = 3)
 
-#birden çok bar grafik çizecek isek 
+colnames(data)
 
-colnames(a)
-a_long <- a %>% 
+names(data)[2] <- "Ayse"
+
+data1 <- data %>% 
   pivot_longer(
-    cols = c(  "L1", "L2", "L3"   ,"L4"  ,  "1 DAY" , "2 DAY"), 
-    names_to = "Stage", 
-    values_to = "Length")
+    cols = c("Ali","Ayse", "Hasan","Tunahan", "Huri") ,
+    names_to = "kisiler",
+    values_to = "para"
+    
+  )
+  
 
-a_long$Stage <- factor(a_long$Stage, levels = c(  "L1", "L2", "L3"   ,"L4"  ,  "1 DAY" , "2 DAY"))
+ggplot(data1, aes(x=kisiler , y=para)) +
+  geom_bar(stat = "identity", position = "dodge", aes(fill=kisiler))+
+  ylim(0,85) +
+  scale_fill_manual(values = c("Ali" = "blue", "Ayse"= "red", "Hasan"= "purple", "Tunahan"="orange", "Huri"="pink"))
 
-ggplot(a_long, aes(x = Stage, y = Length)) +
-  geom_bar(stat = "identity", position = "dodge", aes(fill = Stage)) +
-  scale_fill_manual(values = c("Wild Type" = "#004c99", "wdr-31; eldm-1; rpi-2" = "#0080ff",
-                               "wdr-31;bbs-8"= "#66b2ff", "wdr-31;eldm-1;bbs-8" = "#cce5ff")) +
-  ylim(0, 43) +
-  ggtitle("IFT-74::GFP (Complex B)\nMiddle segment-percent particles") +
-  theme(panel.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(),
-        plot.title = element_text(hjust = 0.5))
+
+#kutucuklara farkli renk ver, plot basligi ortada olacak sekilde, arkaplanı kaldır, arkadaki cizgileri kaldır,
+#eksen cizgilerini belirt, x ve y ekseni isimlerini degistir
+  
+#eleman sirasi belirleme 
+
+data1$kisiler <- factor(data1$kisiler, levels = c("Tunahan", "Huri", "Ayse", "Ali", "Hasan"))
+
+
+ggplot(data1, aes(x=kisiler , y=para)) +
+  geom_bar(stat = "identity", position = "dodge", aes(fill=kisiler))+
+  ylim(0,85) +
+  scale_fill_manual(values = c("Ali" = "blue", "Ayse"= "red", "Hasan"= "purple", "Tunahan"="orange", "Huri"="pink"))+
+  ggtitle("Bar grafigimiz") +
+  theme(
+    panel.background = element_blank(),
+    panel.grid = element_blank(),
+    axis.line = element_line(),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "none") +
+  labs(x= "person", y="income")
+
+#legend kaldirma

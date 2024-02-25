@@ -1,51 +1,63 @@
-  #------------------------ Merhaba YazD1lD1m -------------------------------#
+  
+  #------------------------ Merhaba Yazilim -------------------------------#
 
   #----------------------- Hasan Can Demirci ------------------------------#
 
-setwd("C:\\Users\\Hasan Can Demirci\\Desktop\\R_Orta_Seviye_Egitim")
 
 ## required libraries ##
+
+#install.packages("VennDiagram")
 
 library(VennDiagram)
 library(gridExtra)
 library(readxl)
 
+#data import
+
 data_source <- read_xlsx("data_source.xlsx", sheet = 4)
+
+#kolonlari ayri ayri karakter olarak al
 
 asli <- data_source$Asli
 
-kerem <-data_source$Kerem
+kerem <- data_source$Kerem
 
-ali <- data_source$Ali
+ali <- data_source$Ali 
 
-
+# venn diagrami olustur
+  
 venn <- venn.diagram(
-  x = list(asli,kerem,ali),
-  category.names = c("asli", "kerem","ali"),
+  
+  x= list(asli,kerem,ali),
+  category.names = c("asli","kerem","ali"),
   filename = NULL,
   output = TRUE,
-  fill = c("red", "blue","green")
+  fill = c("red", "blue", "orange")
+  
 )
 
 grid.arrange(venn)
 
+          ##### Venn Diyagrami Analiz Yontemi ########
 
-          ##### Venn DiagramD1 Analiz YC6ntemi ########
 
-
-library(gplots) #required libray 
+library(gplots) #required library 
  
-## Veriyi liste foramtD1na C'evirmek
+## Veriyi liste formatina cevirmek
 
-listtt <-list(asli,kerem,ali)
+listtt <- list(asli,kerem,ali)
 
-## Analiz iC'in ven diyagramD1 almak 
+## Analiz icin ven diyagrami almak 
 
-ItemsList <- venn(listtt, show.plot = T) #FALSE DA YAPILIR
+ItemsList <- venn(listtt, show.plot = T)
+  
 
-##KesiEim eleman sayD1sD1nD1 gC6rmek
+##Kesisim sayisini gormek
 
-lengths(attributes(ItemsList)$intersections)
+length(attributes(ItemsList)$intersections)
 
-## KesiEim elemanlarD1nD1 almak 
+## Kesisim elemanlarini gormek
+
 attributes(ItemsList)$intersections
+
+
